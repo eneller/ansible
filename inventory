@@ -1,0 +1,4 @@
+[oracle]
+server[1:6]_oracle
+
+[home]
