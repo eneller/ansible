@@ -1,0 +1,10 @@
+---
+- name: update apt-cache and upgrade
+- hosts: oracle
+  become: yes
+  tasks:
+    - name: apt
+      apt:
+          update_cache: yes
+          upgrade: 'yes'
+
