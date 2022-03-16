@@ -1,4 +1,4 @@
 [oracle]
-server[1:6]_oracle
+server[1:7]_oracle
 
 [home]
