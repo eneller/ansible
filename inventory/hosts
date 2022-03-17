@@ -1,4 +1,6 @@
-[oracle]
+[oracleServer]
 server[1:7]_oracle
 
 [home]
+[ubuntu]
+server[1:7]_oracle

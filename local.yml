@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  tags: 
+  become: 
+  pre_tasks:
+
+
+
+- hosts:
+  tags:
+  become:
+  roles:
