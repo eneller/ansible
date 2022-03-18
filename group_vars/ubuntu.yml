@@ -1,2 +1,2 @@
 ---
-ubuntu_package_name_apache: "apache2"
+package_name_apache: "apache2"
