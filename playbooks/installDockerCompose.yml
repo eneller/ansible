@@ -2,7 +2,6 @@
 - name: Install Docker 
   # 'all' is okay here, because the fail task will force the user to specify a limit on the command line, using -l or --limit
   hosts: all 
-  become: true
   tasks:
     - name: checking limit arg
       fail:
@@ -11,6 +10,7 @@
       run_once: true
 
     - name: Install required system packages
+      become: true
       apt:
         pkg: 
           - ca-certificates 
@@ -32,6 +32,7 @@
         state: present
 
     - name: Install Docker packages
+      become: true
       apt: 
         update_cache: yes
         pkg:
@@ -45,8 +46,14 @@
           - docker-compose
 
     - name: add user to docker group
+      become: true
       user:
         name: "{{ ansible_user_id }}"
         groups: 
           - docker
         append: yes
+
+    - name: Create docker folder
+      file:
+        path: "{{ansible_user_dir}}/docker"
+        state: directory
