@@ -9,7 +9,7 @@
       when: ansible_limit is not defined
       run_once: true
 
-    - name: apt
+    - name: upgrade apt
       become: true
       apt:
           update_cache: yes
