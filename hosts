@@ -1,3 +1,8 @@
+[desktop]
+
+[headless]
+server[1:7]_oracle
+
 [oracleServer]
 server[1:7]_oracle
 
