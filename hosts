@@ -1,21 +1,20 @@
 [desktop]
 
 [headless]
-server[1:7]_oracle
+server[1:6]_oracle
 
 [oracleServer]
-server[1:7]_oracle
+server[1:6]_oracle
 
 [home]
 
 [ubuntu]
-server[1:7]_oracle
+server[1:6]_oracle
 
 [arm64]
 server2_oracle
 server4_oracle
 server6_oracle
-server7_oracle
 
 [amd64]
 server1_oracle
