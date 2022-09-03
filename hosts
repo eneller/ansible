@@ -12,11 +12,7 @@ server[1:6]_oracle
 server[1:6]_oracle
 
 [arm64]
-server2_oracle
-server4_oracle
-server6_oracle
+server[2:6:2]_oracle
 
 [amd64]
-server1_oracle
-server3_oracle
-server5_oracle
+server[1:5:2]_oracle

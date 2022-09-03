@@ -1,0 +1,13 @@
+---
+- name: reboot machine if required
+  # 'all' is okay here, because the fail task will force the user to specify a limit on the command line, using -l or --limit
+  hosts: 'all'
+
+  tasks:
+    - name: Force limit arg
+      include_role:
+        name: force_limitArg
+
+    - name: Reboot if required
+      include_role:
+        name: reboot_required

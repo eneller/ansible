@@ -1,0 +1,11 @@
+---
+- name: Check if reboot is required
+  stat:
+    path: /var/run/reboot-required
+  register: reboot_required_file
+
+- name: Reboot if required
+  tags: disruptive
+  become: true
+  reboot:
+  when: reboot_required_file.stat.exists == true

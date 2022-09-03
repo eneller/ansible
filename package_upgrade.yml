@@ -1,0 +1,10 @@
+---
+- name: update apt-cache and upgrade
+  hosts: oracleServer
+  tasks:
+    - name: upgrade packages
+      become: true
+      package:
+          update_cache: yes
+          upgrade: 'yes'
+
