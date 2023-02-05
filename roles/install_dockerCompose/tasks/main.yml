@@ -6,7 +6,6 @@
       - curl
       - gnupg
       - lsb-release
-      - python3-pip
     state: latest
     update_cache: yes
 
@@ -31,11 +30,8 @@
       - docker-ce
       - docker-ce-cli
       - containerd.io
+      - docker-compose-plugin
 
-- name: Install docker-compose using pip 
-  pip:
-    name:
-      - docker-compose
 
 - name: add user to docker group
   become: true
@@ -45,7 +41,7 @@
       - docker
     append: yes
 
-- name: Create docker folder
+- name: Create docker folder in home directory
   file:
     path: "{{ansible_user_dir}}/docker"
     state: directory

@@ -1,0 +1,24 @@
+---
+# default login is debian:debian
+- name: install kali keyring
+  hosts: kali
+  tasks:
+    - name: download keyring
+    #wget http://http.kali.org/kali/pool/main/k/kali-archive-keyring/kali-archive-keyring_2022.1_all.deb
+    - name: install keyring
+    #sudo dpkg -i kali-archive-keyring_2022.1_all.deb
+    - name: remove keyring file
+    - name: update and upgrade
+      become: true
+      package:
+        update_cache: yes
+        upgrade: yes
+    
+    # TODO enable ssh
+    # https://linuxhint.com/enable_ssh_kali_linux/
+    # https://learnoci.cloud/how-to-run-kali-linux-in-oci-d5cd553575
+    # dont forget to set permissions on files and folders (home, .ssh), adjust sshd_config
+    # TODO enable rdp
+    # https://www.youtube.com/watch?v=ZQaXNyQLWRQ
+    # TODO mount boot volume
+    # https://www.oracle.com/de/cloud/storage/block-volumes/
