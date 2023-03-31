@@ -1,10 +1,9 @@
 ---
-- name: update apt-cache and upgrade
+- name: Update apt-cache and upgrade
   hosts: oracleServer
   tasks:
-    - name: upgrade packages
+    - name: Upgrade packages
       become: true
-      package:
-          update_cache: yes
-          upgrade: 'yes'
-
+      ansible.builtin.package:
+        update_cache: true
+        upgrade: true

@@ -1,0 +1,29 @@
+- name: Check for existing dotfiles repository
+  ansible.builtin.stat:
+    path: "{{ dotfiles_repo_destination }}HEAD"
+  register: dotfiles_repo_head
+  changed_when: false
+
+- name: Clone into /tmp
+  ansible.builtin.git:
+    dest: /tmp/dotfiles
+    repo: "{{ dotfiles_repo_source }}"
+    version: "{{ dotfiles_repo_commit }}"
+  when: not dotfiles_repo_head.stat.exists
+
+- name: Back up existing dotfiles
+  ansible.builtin.shell:
+    chdir: /tmp/dotfiles
+    cmd: |
+      git ls-files | while read -r line; do
+      mv $HOME/$line $HOME/$line.bak
+      done
+  # when: # TODO only if bare repo doesnt already exist
+  when: not dotfiles_repo_head.stat.exists
+- name: Initialize dotfiles repository in user home
+  ansible.builtin.git:
+    bare: true
+    update: true
+    dest: "{{ ansible_user_directory }}/{{ dotfiles_repo_destination }}"
+    repo: "{{ dotfiles_repo_source }}"
+    version: "{{ dotfiles_repo_commit }}"

@@ -8,6 +8,6 @@
       include_role:
         name: force_limitArg
 
-    - name: Reboot if required
+    - name: Install Docker Compose
       include_role:
         name: install_dockerCompose

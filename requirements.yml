@@ -1,0 +1,19 @@
+---
+roles:
+  - name: jan_matthis.git_dotfiles
+  - name: geerlingguy.dotfiles
+    version: "1.2.1"
+  - name: geerlingguy.docker
+    version: "6.1.0"
+  - name: geerlingguy.git
+    version: "3.1.0"
+  - name: geerlingguy.pip
+    version: "2.2.0"
+  - name: geerlingguy.nginx
+    version: "3.1.4"
+      
+collections:
+  - name: oracle.oci
+    version: "4.18.0"
+  - name: community.docker
+    version: "3.4.3"

@@ -1,23 +1,26 @@
 [desktop]
 
 [headless]
-server[1:7]_oracle
+server[1:7]
+openmediavault
 
 [oracleServer]
-server[1:7]_oracle
+server[1:7]
 
 [home]
 
 [ubuntu]
-server[1:7]_oracle
+server[1:7]
 
 [arm64]
-server[2:6:2]_oracle
-server7_oracle
+server[2:6:2]
+server7
 
 [amd64]
-server[1:5:2]_oracle
+server[1:5:2]
+openmediavault
 
 [prod]
-server1_oracle
-server2_oracle
+server1
+server2
+openmediavault
