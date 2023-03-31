@@ -1,3 +1,22 @@
-dotfiles_repo_source: "git@github.com:eneller/.dotfiles"
-dotfiles_repo_commit: "headless"
-dotfiles_repo_destination: ".dotfiles"
+# The git source of your dotfiles. Will be cloned as a bare repository.
+# Make sure you have set up git correctly before using.
+dotfiles_repo_source: "https://github.com/eneller/.dotfiles.git"
+
+# can be branch name or commit hash, used for ansible.builtin.git version
+dotfiles_repo_version: "headless"
+
+# Will become the parent-directory of your dotfiles 
+dotfiles_dest: "{{ ansible_user_dir }}" 
+
+# The folder name to use for the bare repository
+dotfiles_git_dir: "{{ ansible_user_dir}}/.dotfiles"
+
+# Decide whether to back up already existing dotfiles that would conflict with your repo.
+# Will overwrite them if false
+dotfiles_do_backup: true
+
+# Uses a temporary directory to run git ls-files if {{ dotfiles_do_backup }} is true
+dotfiles_tmp_dir: "/tmp/dotfiles"
+
+# An alias to access the bare repo for internal use
+dotfiles_alias: "git --git-dir={{ dotfiles_git_dir }} --work-tree={{ dotfiles_dest }}"

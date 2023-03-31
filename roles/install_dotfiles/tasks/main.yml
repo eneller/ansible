@@ -1,29 +1,54 @@
 - name: Check for existing dotfiles repository
   ansible.builtin.stat:
-    path: "{{ dotfiles_repo_destination }}HEAD"
+    path: "{{ dotfiles_git_dir }}/HEAD"
   register: dotfiles_repo_head
-  changed_when: false
+  changed_when: false # this never applies changes
+  when: dotfiles_do_backup
 
 - name: Clone into /tmp
   ansible.builtin.git:
-    dest: /tmp/dotfiles
+    dest: "{{ dotfiles_tmp_dir }}"
     repo: "{{ dotfiles_repo_source }}"
-    version: "{{ dotfiles_repo_commit }}"
+    version: "{{ dotfiles_repo_version }}"
   when: not dotfiles_repo_head.stat.exists
 
-- name: Back up existing dotfiles
-  ansible.builtin.shell:
-    chdir: /tmp/dotfiles
-    cmd: |
-      git ls-files | while read -r line; do
-      mv $HOME/$line $HOME/$line.bak
-      done
-  # when: # TODO only if bare repo doesnt already exist
+
+- name: Get list of dotfiles
+  ansible.builtin.command:
+    chdir: "{{ dotfiles_tmp_dir }}"
+    cmd: git ls-files
+  register: dotfiles_lsfiles # needs to be used with .stdout_lines for iteratio
   when: not dotfiles_repo_head.stat.exists
+
+- name: Back up dotfiles that would be overwritten by checkout
+  ansible.builtin.command:
+    cmd: "mv {{ dotfiles_dest }}/{{ item }} {{ dotfiles_dest }}/{{ item }}.bak"
+  args:
+    creates: "{{ dotfiles_dest }}/{{ item }}.bak"
+    removes: "{{ dotfiles_dest }}/{{ item }}"
+  with_items: "{{ dotfiles_lsfiles.stdout_lines }}"
+  when: not dotfiles_repo_head.stat.exists
+
 - name: Initialize dotfiles repository in user home
   ansible.builtin.git:
     bare: true
     update: true
-    dest: "{{ ansible_user_directory }}/{{ dotfiles_repo_destination }}"
+    force: true # this is okay here because we backed up already existing files
+    dest: "{{ dotfiles_git_dir }}"
     repo: "{{ dotfiles_repo_source }}"
-    version: "{{ dotfiles_repo_commit }}"
+    version: "{{ dotfiles_repo_version }}"
+
+# TODO improve these cmd tasks, i dont really know how though
+# i dont know why this checkout is necessary, was expecting the previous task to do this
+- name: Configure git repository
+  ansible.builtin.command:
+    cmd: |
+      {{ dotfiles_alias }}
+      checkout {{ dotfiles_repo_version }}
+      --force
+
+- name: Configure git repository
+  ansible.builtin.command:
+    cmd: |
+      {{ dotfiles_alias }}
+      config status.showUntrackedFiles no

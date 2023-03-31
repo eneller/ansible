@@ -1,13 +1,16 @@
 [desktop]
+# dont put localhost here, ansible will attempt to connect via ssh
 
 [headless]
 server[1:7]
 openmediavault
+kali
 
 [oracleServer]
 server[1:7]
 
 [home]
+kali
 
 [ubuntu]
 server[1:7]
@@ -15,6 +18,7 @@ server[1:7]
 [arm64]
 server[2:6:2]
 server7
+kali
 
 [amd64]
 server[1:5:2]

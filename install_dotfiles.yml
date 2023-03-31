@@ -1,0 +1,8 @@
+---
+- name: Install dotfiles on target
+  hosts: 'kali'
+
+  tasks:
+    - name: Install dotfiles
+      include_role:
+        name: install_dotfiles

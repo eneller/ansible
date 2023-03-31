@@ -1,8 +1,6 @@
 ---
 roles:
   - name: jan_matthis.git_dotfiles
-  - name: geerlingguy.dotfiles
-    version: "1.2.1"
   - name: geerlingguy.docker
     version: "6.1.0"
   - name: geerlingguy.git
