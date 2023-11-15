@@ -1,6 +1,6 @@
 ---
 - name: Update apt-cache and upgrade
-  hosts: oracleServer
+  hosts: all
   tasks:
     - name: Upgrade packages
       become: true
