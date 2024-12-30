@@ -2,20 +2,19 @@
 # dont put localhost here, ansible will attempt to connect via ssh
 
 [headless]
-server[1:5]
+server[1:4]
 
 [oracleServer]
-server[1:5]
+server[1:4]
 
 [home]
 
-[ubuntu]
-server[1:5]
+[debian]
+server[1:4]
 
 [arm64]
 server2
 server4
-server5
 
 [amd64]
 server1
