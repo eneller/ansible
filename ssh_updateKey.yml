@@ -3,6 +3,10 @@
 - name: update ssh key and login permissions
   strategy: free # dont wait for other hosts when executing
   hosts: oracleServer
+  vars_prompt:
+    - name: ssh_key_path
+      prompt: enter the path to the ssh key to add:
+      private: false
   tasks:
 
     - name: Add ssh key
@@ -13,7 +17,7 @@
         user: "{{ ansible_user_id }}"
         exclusive: true
         state: present
-        key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}"
+        key: "{{ lookup('file', '{{ ssh_key_path }}') }}"
 
     - name: sshd configuration file update
       blockinfile:
