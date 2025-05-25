@@ -4,13 +4,14 @@
 [headless]
 server[1:4]
 
-[oracleServer]
+[oracle]
 server[1:4]
 
 [home]
 
 [debian]
 server[1:4]
+jojo
 
 [arm64]
 server2
@@ -19,7 +20,8 @@ server4
 [amd64]
 server1
 server3
+jojo
 
 [prod]
-server1
-server2
+jojo
+server4
