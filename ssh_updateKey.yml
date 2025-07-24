@@ -5,7 +5,7 @@
   hosts: oracleServer
   vars_prompt:
     - name: ssh_key_path
-      prompt: enter the path to the ssh key to add:
+      prompt: enter the path to the ssh key to add
       private: false
   tasks:
 

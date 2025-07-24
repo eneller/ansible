@@ -1,0 +1,21 @@
+---
+# https://docs.ansible.com/ansible/latest/collections/ansible/posix/authorized_key_module.html#examples
+- name: add ssh key
+  strategy: free # dont wait for other hosts when executing
+  hosts: all
+  vars_prompt:
+    - name: ssh_key_path
+      prompt: enter the path to the ssh key to add
+      private: false
+  tasks:
+
+    - name: Add ssh key
+      become: true
+      async: 120 # Maximum execution time
+      poll: 05 # polling interval in seconds
+      ansible.posix.authorized_key:
+        user: "{{ ansible_user_id }}"
+        exclusive: false
+        state: present
+        key: "{{ lookup('file', '{{ ssh_key_path }}') }}"
+
