@@ -1,26 +1,30 @@
 ---
 # https://docs.ansible.com/ansible/latest/collections/ansible/posix/authorized_key_module.html#examples
-- name: update ssh key and login permissions
+- name: Update ssh key and login permissions
   strategy: free # dont wait for other hosts when executing
   hosts: oracleServer
   vars_prompt:
     - name: ssh_key_path
       prompt: enter the path to the ssh key to add
       private: false
+    - name: ssh_key_comment
+      prompt: enter the comment that should be saved in the authorized_keys file
+      private: false
   tasks:
 
     - name: Add ssh key
       become: true
       async: 120 # Maximum execution time
-      poll: 05 # polling interval in seconds
+      poll: 5 # polling interval in seconds
       ansible.posix.authorized_key:
         user: "{{ ansible_user_id }}"
         exclusive: true
         state: present
         key: "{{ lookup('file', '{{ ssh_key_path }}') }}"
+        comment: "{{ ssh_key_comment }}"
 
-    - name: sshd configuration file update
-      blockinfile:
+    - name: Update sshd config
+      ansible.builtin.blockinfile:
         path: /etc/ssh/sshd_config
         insertbefore: BOF # Beginning of the file
         marker: "# {mark} ANSIBLE MANAGED BLOCK BY LINUX-ADMIN"
@@ -33,7 +37,6 @@
         validate: /usr/sbin/sshd -T -f %s
 
     - name: Restart SSHD
-      service:
+      ansible.builtin.service:
         name: sshd
         state: restarted
-
