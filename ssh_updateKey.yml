@@ -20,7 +20,7 @@
         user: "{{ ansible_user_id }}"
         exclusive: false
         state: present
-        key: "{{ lookup('file', '{{ ssh_key_path }}') }}"
+        key: "{{ lookup('file', ssh_key_path) }}"
         comment: "{{ (ssh_key_comment | length > 0) | ternary(ssh_key_comment, omit) }}"
 
     - name: Update sshd config

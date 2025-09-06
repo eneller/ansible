@@ -17,5 +17,5 @@
         user: "{{ ansible_user_id }}"
         exclusive: false
         state: present
-        key: "{{ lookup('file', '{{ ssh_key_path }}') }}"
+        key: "{{ lookup('file', ssh_key_path) }}"
 
