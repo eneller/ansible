@@ -2,7 +2,7 @@
 # https://docs.ansible.com/ansible/latest/collections/ansible/posix/authorized_key_module.html#examples
 - name: Update ssh key and login permissions
   strategy: free # dont wait for other hosts when executing
-  hosts: oracleServer
+  hosts: all
   vars_prompt:
     - name: ssh_key_path
       prompt: enter the path to the ssh key to add
@@ -18,12 +18,13 @@
       poll: 5 # polling interval in seconds
       ansible.posix.authorized_key:
         user: "{{ ansible_user_id }}"
-        exclusive: true
+        exclusive: false
         state: present
         key: "{{ lookup('file', '{{ ssh_key_path }}') }}"
-        comment: "{{ ssh_key_comment }}"
+        comment: "{{ (ssh_key_comment | length > 0) | ternary(ssh_key_comment, omit) }}"
 
     - name: Update sshd config
+      become: true
       ansible.builtin.blockinfile:
         path: /etc/ssh/sshd_config
         insertbefore: BOF # Beginning of the file
@@ -37,6 +38,7 @@
         validate: /usr/sbin/sshd -T -f %s
 
     - name: Restart SSHD
+      become: true
       ansible.builtin.service:
         name: sshd
         state: restarted
