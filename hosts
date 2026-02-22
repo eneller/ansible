@@ -2,26 +2,26 @@
 # dont put localhost here, ansible will attempt to connect via ssh
 
 [headless]
-server[1:4]
+o[1:4]
 
 [oracle]
-server[1:4]
+o[1:4]
 
 [home]
 
 [debian]
-server[1:4]
+o[1:4]
 jojo
 
 [arm64]
-server2
-server4
+o2
+o4
 
 [amd64]
-server1
-server3
+o1
+o3
 jojo
 
 [prod]
 jojo
-server4
+o4
